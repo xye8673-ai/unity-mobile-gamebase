@@ -1,6 +1,7 @@
 name: Build Unity Android APK
 on:
   workflow_dispatch:
+
 jobs:
   build:
     name: Build APK
@@ -18,7 +19,7 @@ jobs:
       - name: Build APK
         uses: game-ci/unity-builder@v4
         env:
-          # 删掉了 UNITY_LICENSE，不再传空文件，全靠邮箱和密码自动激活
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
