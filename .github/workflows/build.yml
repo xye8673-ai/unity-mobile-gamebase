@@ -1,8 +1,6 @@
 name: Build Unity Android APK
-
 on:
   workflow_dispatch:
-
 jobs:
   build:
     name: Build APK
@@ -12,24 +10,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
-
       - name: Cache Unity Library
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-Android-${{ hashFiles('ProjectSettings/ProjectVersion.txt') }}
-
       - name: Build APK
         uses: game-ci/unity-builder@v4
         env:
-          UNITY_LICENSE:  ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL:    ${{ secrets.UNITY_EMAIL }}
+          # 删掉了 UNITY_LICENSE，不再传空文件，全靠邮箱和密码自动激活
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: Android
           androidAppBundle: false
           androidTargetSdkVersion: 34
-
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
